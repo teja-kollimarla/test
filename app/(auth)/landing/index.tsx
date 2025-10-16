@@ -12,7 +12,7 @@ const { height } = Dimensions.get('window');
 export default function LandingPage() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const { login, isAuthenticated, role } = useUser();
+  const { isAuthenticated, role } = useUser();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
 
@@ -39,15 +39,7 @@ export default function LandingPage() {
   }, [fadeAnim, slideAnim]);
 
   const handleRoleSelection = async (selectedRole: UserRole) => {
-    const mockUser = {
-      id: `${selectedRole}-user-1`,
-      name: selectedRole === 'admin' ? 'Admin User' : selectedRole === 'brand' ? 'Brand Manager' : 'Influencer',
-      email: `${selectedRole}@foriqen.com`,
-      role: selectedRole,
-    };
-
-    await login(mockUser);
-    router.replace(`/${selectedRole}` as any);
+    router.push(`/(auth)/login?role=${selectedRole}` as any);
   };
 
   return (
